@@ -40,6 +40,7 @@ void append(int data) {
 void prepend(int data) {
 
 	Node* newNode = getNewNode(data);
+	
 	if(list == NULL) {
 		list = newNode;
 		return;
@@ -53,6 +54,10 @@ void prepend(int data) {
 void print() {
 
 	Node* temp = list;
+	if(temp == NULL) return;
+
+	while(temp->prev != NULL)
+		temp = temp->prev;
 
 	while(temp != NULL) {
 		printf("%d\n", temp->data);
@@ -85,5 +90,5 @@ int main() {
 	append(9);
 	append(10);
 	print();
-	//reversePrint();
+	reversePrint();
 }
