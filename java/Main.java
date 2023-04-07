@@ -2,11 +2,11 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Queue q = new Queue();
-		q.add(10);
-		q.add(15);
-		q.add(20);
-		q.remove();
+		Stack q = new Stack();
+		q.push(10);
+		q.push(15);
+		q.push(20);
+		q.pop();
 		System.out.println(q.peek());
 	}
 }
