@@ -54,8 +54,8 @@ void addToEnd() {
 	} else {
 		tail->next = novo;
 		novo->prev = tail;
-		tail->next = NULL;
 		tail = novo;
+		tail->next = NULL;
 	}
 	std::cout << "\nAdded";
 }
