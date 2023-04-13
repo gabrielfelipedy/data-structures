@@ -6,6 +6,8 @@ typedef struct Lista {
 	Lista* next;
 	Lista* prev;
 } Lista;
+Lista* head = NULL;
+Lista* tail = NULL;
 
 void chooseOption(int* opt) {
 	std::cout << "\n===MENU===\n";
@@ -20,7 +22,7 @@ void chooseOption(int* opt) {
 	std::cin >> *opt;
 }
 
-void addToStart(Lista* head, Lista* tail) {
+void addToStart() {
 	std::cout << "\nType the number: ";
 	Lista* novo = new Lista();
 	std::cin >> novo->data;
@@ -39,8 +41,8 @@ void addToStart(Lista* head, Lista* tail) {
 	std::cout << "\nAdded";
 }
 
-void addToEnd(Lista* head, Lista* tail) {
-	std::cout << "\nType the number: " << std::endl;
+void addToEnd() {
+	std::cout << "\nType the number: ";
 	Lista* novo = new Lista();
 	std::cin >> novo->data;
 
@@ -58,7 +60,7 @@ void addToEnd(Lista* head, Lista* tail) {
 	std::cout << "\nAdded";
 }
 
-void printL(Lista* head) {
+void printL() {
 	if(head == NULL)
 		std::cout << "\nEmpty List" << std::endl;
 	else {
@@ -70,18 +72,19 @@ void printL(Lista* head) {
 	}
 }
 
-void printRL(Lista* tail) {
+void printRL() {
 	if(tail == NULL)
 		std::cout << "Empty List" << std::endl;
 	else {
 		Lista* aux = tail;
-		while(aux != NULL);
-		std::cout << aux->data << " ";
-		aux = aux->prev;
+		while(aux != NULL) {
+			std::cout << aux->data << " ";
+			aux = aux->prev;
+		}
 	}
 }
 
-void deleteE(Lista* head, Lista* tail) {
+void deleteE() {
 	if(head == NULL)
 		std::cout << "\nEmpty" << std::endl;
 	else {
@@ -131,18 +134,16 @@ void clearL() {
 }
 
 int main() {
-	Lista* head = NULL;
-	Lista* tail = NULL;
 	int opt;
 	do {
 		chooseOption(&opt);
 		if(opt < 1 || opt > 7)
 			std::cout << "\nInvalid";
-		if(opt == 1) addToStart(head, tail);
-		if(opt == 2) addToEnd(head, tail);
-		if(opt == 3) printL(head);
-		if(opt == 4) printRL(tail);
-		if(opt == 5) deleteE(head, tail);
+		if(opt == 1) addToStart();
+		if(opt == 2) addToEnd();
+		if(opt == 3) printL();
+		if(opt == 4) printRL();
+		if(opt == 5) deleteE();
 		if(opt == 6) clearL();
 	} while(opt != 7);
 	return 0;
