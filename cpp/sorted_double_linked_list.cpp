@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <iostream>
 
 typedef struct Lista
@@ -78,6 +79,87 @@ void printL()
 	}
 }
 
+void printRL()
+{
+	if(head == NULL)
+		std::cout << "Empty" << std::endl;
+	else
+	{
+		Lista* aux = tail;
+		while(aux != NULL)
+		{
+			std::cout << aux->data << " ";
+			aux = aux->prev;
+		}
+	}
+}
+
+void deleteE()
+{
+	if(head == NULL)
+		std::cout << "Empty" << std::endl;
+	else
+	{
+		int numero;
+		std::cout << "\nType the number: ";
+		std::cin >> numero;
+
+		Lista* aux = head;
+		bool achou = false;
+		while(aux != NULL)
+		{
+			if(aux->data == numero)
+			{
+				achou = true;
+				if(aux == head)
+				{
+					head = aux->next;
+					if(head != NULL)
+						head->prev = NULL;
+					delete(aux);
+					aux = head;
+				}
+				else if(aux == tail)
+				{
+					tail = aux->prev;
+					tail->next = NULL;
+					delete(aux);
+					aux = NULL;
+				}
+				else
+				{
+					delete(aux);
+					aux = aux->next;
+				}
+			} 
+			else
+			{
+				aux = aux->next;
+			}
+		}
+		if(achou)
+			std::cout << "Deleted" << std::endl;
+		else
+			std::cout << "404" << std::endl;
+	}
+}
+
+void clearL()
+{
+	if(head == NULL)
+		std::cout << "Empty\n";
+	else
+	{
+		Lista* aux = head;
+		while(aux != NULL) {
+			head = head->next;
+			delete(aux);
+			aux = head;
+		}
+		std::cout << "Cleaned" << std::endl;
+	}
+}
+
 int main() 
 {
 	int opt;
@@ -86,6 +168,9 @@ int main()
 		chooseOption(&opt);
 		if(opt == 1) add();
 		if(opt == 2) printL();
+		if(opt == 3) printRL();
+		if(opt == 4) deleteE();
+		if(opt == 5) clearL();
 	} while(opt != 6);
 	return 0;
 }
