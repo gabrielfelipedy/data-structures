@@ -42,14 +42,14 @@ void addList(Lista* l, Numero* n) {
 		l->tail->next = NULL;
 	}
 	else {
-		l->tail->next = n;
-		l->tail = n;
-		l->tail->next = NULL;
+		n->next = l->head;
+		l->head = n;
 	}
 }
 
 void printList(Lista l) {
 	Numero* aux = l.head;
+	std::cout << "\n===PRINT===\n";
 	while(aux != NULL) {
 		std::cout << aux->data << " " << std::endl;
 		aux = aux->next;
@@ -66,60 +66,47 @@ void addNumber() {
 		addList(&li, novo);
 }
 
-Numero* DNumToNum(DNumero* d) {
-	Numero* novo = new Numero();
-	novo->data = d->data;
-	novo->next = NULL;
-	return novo;
-}
-
 DNumero* NumToDNum(Numero* d) {
 	DNumero* novo = new DNumero();
 	novo->data = d->data;
-	novo->next = NULL;
-	novo->prev = NULL;
 	return novo;
 }
 
-void copyNumbers(Lista lista) {
-	ListaGeral auxG = lg;
-	Numero* ap = lista.head;
-	DNumero* ag = auxG.head;
-	while(ap != NULL) {
-		if(ag == NULL) {
-			DNumero* aux = NumToDNum(ap);
-			auxG.head = aux;
-			auxG.tail = aux;
-			aux->next = NULL;
-			aux->prev = NULL;
-		}
-		else {
-			while(ag != NULL && ap->data > ag->data) {
-				ag = ag->next;
+void copyNumbers(ListaGeral* lg, Lista l) {	
+	Numero* a = l.head;
+	while(a != NULL) {
+		DNumero* novo = NumToDNum(a);
+		if(lg->head != NULL) {
+			DNumero* aux = lg->head;
+			while(aux != NULL && novo->data > aux->data) {
+				aux = aux->next;
 			}
-			if(ag == auxG.head) {
-				DNumero* aux = NumToDNum(ap);
-				aux->next = ag;
-				aux->prev = NULL;
-				ag->prev = aux;
-				ag = aux;
-			} else if(ag == NULL) {
-				DNumero* aux = NumToDNum(ap);
-				auxG.tail->next = aux;
-				aux->prev = auxG.tail;
-				auxG.tail = aux;
-				auxG.tail->next = NULL;
+			
+			if(aux == lg->head) {
+				novo->next = lg->head;
+				novo->prev = NULL;
+				lg->head->prev = novo;
+				lg->head = novo;
+			} else if(aux == NULL) {
+				lg->tail->next = novo;
+				novo->prev = lg->tail;
+				novo->next = NULL;
+				lg->tail = novo;
 			} else {
-				DNumero* aux = NumToDNum(ap);
-				aux->next = ag;
-				ag->prev->next = aux;
-				aux->prev = ag->prev;
-				ag->prev = aux;
+				aux->prev->next = novo;
+				novo->next = aux;
+				novo->prev = aux->prev;
+				aux->prev = novo;
 			}
+		} else {
+			lg->head = novo;
+			lg->tail = novo;
+			novo->next = NULL;
+			novo->prev = NULL;
 		}
-		ap = ap->next;
+		std::cout << "\n[*] Number " << novo->data << " added" << std::endl;
+		a = a->next;
 	}
-	lg = auxG;
 }
 
 void printGeral() {
@@ -127,8 +114,9 @@ void printGeral() {
 		std::cout << "\n[!] Empty\n";
 	else {
 		DNumero* aux = lg.head;
+		std::cout << "\n===PRINT ALL===\n";
 		while(aux != NULL) {
-			std::cout << aux->data << " ";
+			std::cout << aux->data << std::endl;
 			aux = aux->next;
 		}
 	}
@@ -136,13 +124,13 @@ void printGeral() {
 
 int main() {
 	init();
-	for(int i = 0; i < 5; i++) {
+	for(int i = 0; i < 20; i++) {
 		addNumber();
 	}
 	printList(lp);
 	printList(li);
-	copyNumbers(lp);
-	copyNumbers(li);
+	copyNumbers(&lg, lp);
+	copyNumbers(&lg, li);
 	printGeral();
 	return 0;
 }
