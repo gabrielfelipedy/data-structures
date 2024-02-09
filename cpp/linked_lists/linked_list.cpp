@@ -1,15 +1,12 @@
 #include <iostream>
 #include <stdbool.h>
 
+typedef struct lista {
+	int num;
+	lista* next;
+} lista;
+
 int main() {
-
-	typedef struct lista {
-
-		int num;
-		lista* next;
-
-	} lista;
-
 	lista* inicio = NULL;
 	lista* fim = NULL;
 
@@ -18,6 +15,7 @@ int main() {
 
 	int opt, numero;
 	bool achou;
+
 	do {
 
 		std::cout << "\n===MENU===\n";
